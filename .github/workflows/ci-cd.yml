@@ -16,7 +16,15 @@ jobs:
     - name: Setup PHP  
       uses: shivammathur/setup-php@v2  
       with:  
-        php-version: '8.0' # Sesuaikan dengan versi PHP yang kamu gunakan  
+        php-version: '8.0' # Sesuaikan versi PHP yang digunakan  
+        
+    - name: Cache Composer Dependencies  
+      uses: actions/cache@v2  
+      with:  
+        path: vendor  
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}  
+        restore-keys: |  
+          ${{ runner.os }}-composer-  
 
     - name: Install Composer Dependencies  
       run: composer install --prefer-dist --no-progress --no-suggest  
